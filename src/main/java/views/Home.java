@@ -33,14 +33,17 @@ public class Home extends RSBBaseView {
             this.loginModal = loginModal;
         }
         public void enterUserName(String userName){
+            System.out.println("Logging in with UserName " +  userName);
             loginModal.findElement(By.cssSelector("#username")).sendKeys(userName);
         }
 
         public void enterPassword(String password){
+            System.out.println("Logging in with Password " +  password);
             loginModal.findElement(By.cssSelector("#password")).sendKeys(password);
         }
 
         public void clickLogin(){
+            System.out.println("Clicking on Login button ");
             loginModal.findElement(By.cssSelector("#doLogin")).click();
         }
     }

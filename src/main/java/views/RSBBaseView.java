@@ -15,6 +15,7 @@ public class RSBBaseView {
     protected RemoteWebDriver driver;
     protected String viewRef;
     protected String viewName;
+    protected static int viewLoadTimeOut = 5;
 
     public RSBBaseView(String viewName, String viewRef){
         driver = DriverFactory.getDriver();
