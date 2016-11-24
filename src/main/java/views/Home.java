@@ -13,7 +13,7 @@ import java.util.List;
 public class Home extends RSBBaseView {
     private static By brandLabelLocator = By.cssSelector(".navbar-brand");
     private List<WebElement> navBarLinks = new ArrayList<WebElement>();
-    private LoginModal loginModal = null;
+    public LoginModal loginModal = new LoginModal();
     public Home() {
         super("Home", "01", brandLabelLocator , 5);
         navBarLinks = driver.findElements(By.cssSelector(".navbar-nav a"));

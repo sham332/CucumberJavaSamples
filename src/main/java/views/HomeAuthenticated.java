@@ -17,7 +17,7 @@ public class HomeAuthenticated extends RSBBaseView {
     private By hotelOwnerInput = By.cssSelector("#owner");
     private By hotelPhoneInput = By.cssSelector("#phone");
     private By hotelEmailInput = By.cssSelector("#email");
-    private By hotelRowIdentifier = By.cssSelector(".hotelRow");
+    private By hotelRowIdentifier = By.className("hotelRow");
     private ArrayList<HotelRow> hotels = null;
 
     public HomeAuthenticated() {
@@ -28,7 +28,7 @@ public class HomeAuthenticated extends RSBBaseView {
     public boolean clickOnCreateHotel(){
         System.out.println("Clicking on create button");
         int initialNo = getDisplayedHotels();
-        driver.findElement(createButton);
+        driver.findElement(createButton).click();
         driverHelper.waitForPageReady(driver,viewLoadTimeOut);
         if(getDisplayedHotels()==initialNo+1)
         {
@@ -65,18 +65,75 @@ public class HomeAuthenticated extends RSBBaseView {
         driver.findElement(hotelEmailInput).sendKeys(email);
     }
 
+   public boolean checkHotelAdded(String HotelName, String Address, String Owner, String PhoneNumber, String Email){
+       boolean check = false;
+       for(HotelRow hotel:hotels){
+           if(!hotel.getHotelName().contains(HotelName)){
+               continue;
+           }
+           if(!hotel.getAddress().contains(Address)){
+               continue;
+           }
+           if(!hotel.getOwner().contains(Owner)){
+               continue;
+           }
+           if(!hotel.getPhoneNumber().contains(PhoneNumber)){
+               continue;
+           }
+           if(!hotel.getEmail().contains(Email)){
+               continue;
+           }
+
+           return true;
+       }
+       return false;
+   }
 
     public int getDisplayedHotels(){
+        try{
+            driver.findElement(hotelRowIdentifier);
+        }
+        catch(Exception ex){
+            return 0;
+        }
         return driver.findElements(hotelRowIdentifier).size();
     }
 
     private void loadHotels(){
         List<WebElement> hotelsElements = driver.findElements(hotelRowIdentifier);
-        ArrayList<HotelRow> refreshedHotels = null;
+        ArrayList<HotelRow> refreshedHotels = new ArrayList<HotelRow>();
         for(int i=0; i< hotelsElements.size();i++){
             refreshedHotels.add(new HotelRow(hotelsElements.get(i), i));
         }
         hotels = refreshedHotels;
+    }
+
+    public void deleteHotel(String HotelName, String Address, String Owner, String PhoneNumber, String Email){
+        HotelRow hotelToBeDeleted = getHotel( HotelName,  Address,  Owner,  PhoneNumber,  Email);
+        hotelToBeDeleted.delete();
+    }
+
+    public HotelRow getHotel(String HotelName, String Address, String Owner, String PhoneNumber, String Email){
+        for(HotelRow hotel:hotels){
+            if(!hotel.getHotelName().contains(HotelName)){
+                continue;
+            }
+            if(!hotel.getAddress().contains(Address)){
+                continue;
+            }
+            if(!hotel.getOwner().contains(Owner)){
+                continue;
+            }
+            if(!hotel.getPhoneNumber().contains(PhoneNumber)){
+                continue;
+            }
+            if(!hotel.getEmail().contains(Email)){
+                continue;
+            }
+
+            return hotel;
+        }
+        return null;
     }
 
     public class HotelRow {
