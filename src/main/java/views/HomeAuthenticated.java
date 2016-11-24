@@ -67,6 +67,7 @@ public class HomeAuthenticated extends RSBBaseView {
 
    public boolean checkHotelAdded(String HotelName, String Address, String Owner, String PhoneNumber, String Email){
        boolean check = false;
+       loadHotels();
        for(HotelRow hotel:hotels){
            if(!hotel.getHotelName().contains(HotelName)){
                continue;
@@ -114,6 +115,7 @@ public class HomeAuthenticated extends RSBBaseView {
     }
 
     public HotelRow getHotel(String HotelName, String Address, String Owner, String PhoneNumber, String Email){
+        loadHotels();
         for(HotelRow hotel:hotels){
             if(!hotel.getHotelName().contains(HotelName)){
                 continue;

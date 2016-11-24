@@ -100,6 +100,7 @@ public class Stepdefs {
 
     @When("^clicks delete on hotel with below details$")
     public void clicks_delete_on_hotel_with_below_details(List<HotelDetails> hotel) throws Throwable {
+        hotelAdded = hotel.get(0);
         homeAuthenticatedView.deleteHotel(hotelAdded.hotelName, hotelAdded.address, hotelAdded.owner, hotelAdded.phoneNumber, hotelAdded.email);
     }
 
